@@ -5,9 +5,9 @@ from .views import ProductDetailView, ProductViewSet
 
 # Create a router and register our viewset with it.
 router = DefaultRouter()
-router.register(r'products', ProductViewSet)
+router.register(r'', ProductViewSet)
 
 urlpatterns = [
-    path('product/<int:product_id>/', ProductDetailView.as_view(), name='product_detail'),
+    path('<int:product_id>/', ProductDetailView.as_view(), name='product_detail'),
     path('', include(router.urls)),
 ]
