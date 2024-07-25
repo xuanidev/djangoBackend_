@@ -14,7 +14,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = Path(__file__).resolve().parent / 'media'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'productos'
 ]
 
@@ -126,4 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }
