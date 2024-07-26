@@ -1,14 +1,15 @@
-# views.py
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 from .models import Cliente
 from .serializers import ClienteSerializer
 
 # Function-based detail view using APIView for Cliente
 class ClienteDetailView(APIView):
+    authentication_classes = (TokenAuthentication,)  # Use token authentication
     permission_classes = (IsAuthenticated,)  # Ensure the user is authenticated
 
     def get(self, request, cliente_id):
@@ -33,4 +34,5 @@ class ClienteDetailView(APIView):
 class ClienteViewSet(viewsets.ModelViewSet):
     serializer_class = ClienteSerializer
     queryset = Cliente.objects.all()
+    authentication_classes = (TokenAuthentication,)  # Use token authentication
     permission_classes = (IsAuthenticated,)  # Ensure the user is authenticated

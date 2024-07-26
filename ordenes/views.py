@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
-from .models import Order
-from .serializers import OrderSerializer
+from .models import Order, OrderItem
+from .serializers import OrderItemSerializer, OrderSerializer
 
 # Function-based detail view using APIView for Order
 class OrderDetailView(APIView):
@@ -34,3 +34,14 @@ class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
     permission_classes = (IsAuthenticated,)  # Ensure the user is authenticated
+
+# ViewSet for CRUD operations for OrderItem
+class OrderItemViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderItemSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        order_id = self.kwargs.get('order_id')
+        if order_id:
+            return OrderItem.objects.filter(order_id=order_id)
+        return OrderItem.objects.all()
